@@ -62,6 +62,9 @@ public class ArrayQueue implements QueueInterface{
 		}
 		else {throw new QueueException("QueueException: Queue is empty on peek");}
 	}
-
+	public double percentFull() {
+		//for(i:)
+		return 0.0;
+	}
 
 }

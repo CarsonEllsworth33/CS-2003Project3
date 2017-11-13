@@ -13,5 +13,9 @@ public class Highway {
 	public ArrayQueue getRegularHW() {
 		return regularHW;
 	}
+	public double percentFull() {
+		
+		return 0.0;
+	}
 	
 }
