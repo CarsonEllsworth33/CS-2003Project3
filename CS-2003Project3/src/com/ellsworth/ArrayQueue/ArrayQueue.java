@@ -40,14 +40,19 @@ public class ArrayQueue implements QueueInterface{
 		if((!isEmpty())) {
 			Object queueFront = items[front];
 			front = (front + 1) % MAX_QUEUE;
+			--count;
 			return queueFront;
 		}
 		else {throw new QueueException("QueueException: Queue is empty on dequeue");}
 	}
-
+	
+	@Override
+	public int size() {
+		return count;
+	}
+	
 	@Override
 	public void dequeueAll() {
-		// TODO Auto-generated method stub
 		items = new Object[MAX_QUEUE];
 		this.front = 0;
 		this.back = MAX_QUEUE -1;
@@ -56,15 +61,15 @@ public class ArrayQueue implements QueueInterface{
 
 	@Override
 	public Object peek() throws QueueException {
-		// TODO Auto-generated method stub
 		if((!isEmpty())) {
 			return items[front];
 		}
 		else {throw new QueueException("QueueException: Queue is empty on peek");}
 	}
 	public double percentFull() {
-		//for(i:)
-		return 0.0;
+		double percent;
+		percent = ((double)this.size()/(double)this.MAX_QUEUE)*100;
+		return percent;
 	}
 
 }

@@ -17,4 +17,5 @@ public class Car {
 	public boolean inConstruction() {
 		return false;
 	}
+	
 }

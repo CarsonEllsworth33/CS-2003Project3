@@ -1,21 +1,21 @@
 package com.ellsworth.Project3;
 import com.ellsworth.ArrayQueue.ArrayQueue;
 public class Highway {
-	private ArrayQueue contructionHW;
-	private ArrayQueue regularHW;
+	private  ArrayQueue constructionHW;
+	private  ArrayQueue regularHW;
 	public Highway() {
-		contructionHW = new ArrayQueue(50);
+		constructionHW = new ArrayQueue(50);
 		regularHW = new ArrayQueue(50);
 	}
 	public ArrayQueue getContructionHW() {
-		return contructionHW;
+		return constructionHW;
 	}
 	public ArrayQueue getRegularHW() {
 		return regularHW;
 	}
-	public double percentFull() {
+	
+	public static void main(String...strings) {
 		
-		return 0.0;
 	}
 	
 }
