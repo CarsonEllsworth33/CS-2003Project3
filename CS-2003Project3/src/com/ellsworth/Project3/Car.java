@@ -9,8 +9,8 @@ public class Car {
 	// the car will advance 1 tile per 2 seconds at 40 mph
 	private int conFtPerS = 50; 
 	private int position;
-	public Car() {
-		
+	public Car(int position) {
+		this.position = position;
 	}
 	public void Increment() {
 		position++;

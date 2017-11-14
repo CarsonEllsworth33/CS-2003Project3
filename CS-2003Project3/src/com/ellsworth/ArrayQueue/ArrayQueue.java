@@ -20,8 +20,13 @@ public class ArrayQueue implements QueueInterface{
 		percent = ((double)this.size()/(double)this.MAX_QUEUE)*100;
 		return percent;
 	}
+	
+	public Object peekAt(int intLocation) {
+		return items[intLocation];
+	}
+	
 	public boolean atEnd(Car O) {
-		if(O.getPosition() == (MAX_QUEUE -1)) {}
+		if(O.getPosition() == 0) {}
 		return false;
 	}
 	public int getMAX_QUEUE() {
@@ -29,6 +34,9 @@ public class ArrayQueue implements QueueInterface{
 	}
 	public int getBack() {
 		return back;
+	}
+	public int getFront() {
+		return front;
 	}
 	@Override
 	public boolean isEmpty() {

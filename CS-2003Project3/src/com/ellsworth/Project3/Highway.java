@@ -32,12 +32,12 @@ public class Highway {
 	}
 	public int checkEndofHW(Car C) {
 		//if this is true then there is a car at the end of the Highway
-		if(this.regularHW.getBack()==this.regularHW.getMAX_QUEUE()&&this.regularHW.peek().equals(C)) {
+		if(this.regularHW.getBack()==this.regularHW.getMAX_QUEUE()) {
 			
 		}
 		return 0;
 	}
-	public ArrayQueue getContructionHW() {
+	public ArrayQueue getConstructionHW() {
 		return constructionHW;
 	}
 	public ArrayQueue getRegularHW() {
