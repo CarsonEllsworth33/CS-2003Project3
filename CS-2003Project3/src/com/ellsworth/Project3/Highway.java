@@ -25,8 +25,17 @@ public class Highway {
 		
 	}
 	public boolean endOfHW() {
-		
+		if(this.CONSTRUCTION_ZONE != 0) {
+			
+		}
 		return false;
+	}
+	public int checkEndofHW(Car C) {
+		//if this is true then there is a car at the end of the Highway
+		if(this.regularHW.getBack()==this.regularHW.getMAX_QUEUE()&&this.regularHW.peek().equals(C)) {
+			
+		}
+		return 0;
 	}
 	public ArrayQueue getContructionHW() {
 		return constructionHW;

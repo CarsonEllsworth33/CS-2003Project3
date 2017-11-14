@@ -1,5 +1,7 @@
 package com.ellsworth.ArrayQueue;
 
+import com.ellsworth.Project3.Car;
+
 public class ArrayQueue implements QueueInterface{
 	private final int MAX_QUEUE;
 	private Object[] items;
@@ -13,6 +15,21 @@ public class ArrayQueue implements QueueInterface{
 		this.count = 0;
 	}
 	
+	public double percentFull() {
+		double percent;
+		percent = ((double)this.size()/(double)this.MAX_QUEUE)*100;
+		return percent;
+	}
+	public boolean atEnd(Car O) {
+		if(O.getPosition() == (MAX_QUEUE -1)) {}
+		return false;
+	}
+	public int getMAX_QUEUE() {
+		return MAX_QUEUE;
+	}
+	public int getBack() {
+		return back;
+	}
 	@Override
 	public boolean isEmpty() {
 		return count == 0;
@@ -66,10 +83,6 @@ public class ArrayQueue implements QueueInterface{
 		}
 		else {throw new QueueException("QueueException: Queue is empty on peek");}
 	}
-	public double percentFull() {
-		double percent;
-		percent = ((double)this.size()/(double)this.MAX_QUEUE)*100;
-		return percent;
-	}
 
+	
 }

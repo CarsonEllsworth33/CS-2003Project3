@@ -18,13 +18,19 @@ public class Simulation {
 				e.printStackTrace();
 			}
 			seconds++;
+			if(HW.getRegularHW().isFull()) {
+				HW.getContructionHW().enqueue(HW.getRegularHW().dequeue());
+			}
 			HW.getRegularHW().enqueue(null);
 			if(seconds == 60) {
 				minute++;
 				seconds = 0;
 				HW.getRegularHW().enqueue(new Car());
 			}	
-			System.out.printf("min: %d sec: %d%n",minute,seconds);
+			
+			System.out.printf("min: %d sec: %d backPos: %d%n",minute,seconds,HW.getRegularHW().getBack());
+			
+			
 		}
 	}
 	
