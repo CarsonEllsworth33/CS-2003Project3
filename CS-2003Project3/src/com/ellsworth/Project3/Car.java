@@ -10,6 +10,7 @@ public class Car {
 	// the car will advance 1 tile per 2 seconds at 40 mph
 	private int conFtPerS = 50; 
 	private int position;
+	private boolean inConstruction = false;
 	private Highway whereImDriving;
 	
 	public Car(int position, Highway HW, int arrivalTime) {
@@ -20,37 +21,43 @@ public class Car {
 	}
 	
 	public void Increment() {
-		if(inConstruction()) {}
+		this.mergeCheck();
+		if(this.inConstruction) {
+			this.position = this.position + conFtPerS;
+		}
+		else {
+			this.position = this.position + ftPerS;
+		}
 		
+	}
+	
+	public String toString() {
+		String s = " Pos: "+this.getPosition()+" AT: "+this.getArrivalTime() + " C_Zone; " + this.inConstruction;
+		return s;
+	}
+	
+	/**
+	 * function used to transfer over the car to the construction queue
+	 */
+	public void mergeCheck() {
+		if(this.inConstructHW()) {
+			if(this.getPosition()>=780 && this.inConstruction == false) {//ready to be in the construction zone
+				whereImDriving.getConstructionHW().enqueue(this);
+				whereImDriving.getRegularHW().dequeue();
+				this.inConstruction = true;
+			}
+		}	
+	}
+	
+
+	public boolean inConstructHW() {
+		return whereImDriving.getUnderConstruction();
 	}
 	
 	public void setSpeed(int i) {
 		// TODO Auto-generated method stub
 		this.speed = i;
 	}
-	
-	public void driveSpeed() {
-		if(this.inConstruction()) {
-			this.setSpeed(conFtPerS);
-		}
-		else {
-			this.setSpeed(ftPerS);
-		}
-		
-	
-	}
-	//not complete needs to take into count that after exiting that speed is out of scope
-	public void driveHW(int speed) {
-		if(speed%100 == 0) {
-			this.Increment();
-		}
-		else speed = speed*2;
-	}
-
-	public boolean inConstruction() {
-		return false;
-	}
-
 
 	public double getArrivalTime() {
 		return arrivalTime;

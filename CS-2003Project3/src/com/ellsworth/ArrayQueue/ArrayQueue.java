@@ -25,26 +25,7 @@ public class ArrayQueue implements QueueInterface{
 	public Car peekAt(int intLocation) {
 		return (Car) items[intLocation];
 	}
-	//needs work to fully determine what the end of the highway actually is
-	public boolean atEnd(Car O) {
-		if(O.getPosition() == MAX_QUEUE) {}
-		return false;
-	}
-	public int getMAX_QUEUE() {
-		return MAX_QUEUE;
-	}
-	public int getBack() {
-		return back;
-	}
-	public int getFront() {
-		return front;
-	}
-	/*public int itemPlace() {
-		for(Object i:items) {
-			
-		}
-		return 0;
-	}*/
+	
 	@Override
 	public boolean isEmpty() {
 		return count == 0;
@@ -99,5 +80,24 @@ public class ArrayQueue implements QueueInterface{
 		else {throw new QueueException("QueueException: Queue is empty on peek");}
 	}
 
-	
+	public boolean atEnd(Car O) {
+		if(O.getPosition() == MAX_QUEUE) {}
+		return false;
+	}
+	public int getMAX_QUEUE() {
+		return MAX_QUEUE;
+	}
+	public int getBack() {
+		return back;
+	}
+	public int getFront() {
+		return front;
+	}
+	public String toString() {
+		String s = "";
+		for(int i = 0; i < this.size();i++) {
+			s += String.format("|%s|", this.peekAt(i).toString());
+		}
+		return s +="\n";
+	}
 }

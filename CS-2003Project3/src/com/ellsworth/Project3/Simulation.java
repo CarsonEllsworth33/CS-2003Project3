@@ -8,24 +8,22 @@ public class Simulation {
 	public static void clock(int minutes, int seconds, Highway HW) {
 		setMinute(minutes);
 		setSeconds(seconds);
-		for(int i = 0; i < 30000;i++) {
-			
-			seconds++;
-			if(HW.getRegularHW().isFull()) {
-				HW.getConstructionHW().enqueue(HW.getRegularHW().dequeue());
+		for(int i = 0; i < 10;i++) {
+			try {
+				Thread.sleep(750);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			HW.getRegularHW().enqueue(null);
-			if(seconds == 60) {
-				minute++;
-				seconds = 0;
+			seconds++;
+			if(!HW.getRegularHW().isFull()) {
 				HW.getRegularHW().enqueue(new Car(0,HW,i));
-				
-			}	
-			
+				HW.carsInQueue(HW.getRegularHW());
+				HW.carsInQueue(HW.getConstructionHW());
+			}
 			//System.out.printf("min: %d sec: %d RHWbackPos: %d CHWbackPos: %d RHWfrontPos: %d CHWfrontPos: %d RHWcount: %d CHWcount: %d%n",minute,seconds,HW.getRegularHW().getBack(),HW.getConstructionHW().getBack(),HW.getRegularHW().getFront(),HW.getConstructionHW().getFront(),HW.getRegularHW().size(),HW.getConstructionHW().size());
-			System.out.printf("RHWcar: %d CHWcar: %d%n",HW.carsInQueue(HW.getRegularHW()),HW.carsInQueue(HW.getConstructionHW()));
-			System.out.printf("Car# %d pos: %d");
+			//System.out.printf("RHWcar: %d CHWcar: %d%n",HW.carsInQueue(HW.getRegularHW()),HW.carsInQueue(HW.getConstructionHW()));
+			System.out.printf("%s",HW.toString());
 		}
 	}
 	

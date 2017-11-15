@@ -17,27 +17,12 @@ public class Highway {
 		this.underConstruction = underConstruct;
 		if(underConstruction == true) {
 			constructionHW = new ArrayQueue(CONSTRUCTION_ZONE);
-			regularHW = new ArrayQueue(HIGHWAY_SIZE - CONSTRUCTION_ZONE);
-		
+			regularHW = new ArrayQueue(HIGHWAY_SIZE - CONSTRUCTION_ZONE);	
 		}
 		else {
 			constructionHW = new ArrayQueue(0);
 			regularHW = new ArrayQueue(HIGHWAY_SIZE);
-		}
-		
-	}
-	public boolean endOfHW() {
-		if(this.CONSTRUCTION_ZONE != 0) {
-			
-		}
-		return false;
-	}
-	public int checkEndofHW(Car C) {
-		//if this is true then there is a car at the end of the Highway
-		if(this.regularHW.getBack()==this.regularHW.getMAX_QUEUE()) {
-			
-		}
-		return 0;
+		}	
 	}
 	
 	public int carsInQueue(ArrayQueue A) {
@@ -46,30 +31,34 @@ public class Highway {
 			if(A.peekAt(i) instanceof Car) { 
 				carCount++;
 				A.peekAt(i).Increment();
+				A.peekAt(i).toString();
 			}
 		}
 		return carCount;
 	}
-	public void Merge() {
-		if(underConstruction) {
-			this.getConstructionHW().enqueue(this.getRegularHW().dequeue());
-		}
+	
+	public String toString() {
+		String s = this.getRegularHW().toString() + "\n" + this.getConstructionHW().toString();
+		return s;
 	}
+	
 	public ArrayQueue getConstructionHW() {
 		return constructionHW;
 	}
+	
 	public ArrayQueue getRegularHW() {
 		return regularHW;
 	}
 	
-	public static void main(String...strings) {
-		
-	}
 	public int getConstSpeedLimit() {
 		return CONSTRUCTION_SL;
 	}
+	
 	public int getSpeedLimit() {
 		return SPEED_LIMIT;
 	}
 	
+	public boolean getUnderConstruction() {
+		return underConstruction;
+	}
 }
