@@ -11,8 +11,10 @@ public class Highway {
 	private final int CONSTRUCTION_ZONE = 260;
 	private final int SPEED_LIMIT = 75;
 	private final int CONSTRUCTION_SL = 40;
+	private final boolean underConstruction;
 	
-	public Highway(boolean underConstruction) {
+	public Highway(boolean underConstruct) {
+		this.underConstruction = underConstruct;
 		if(underConstruction == true) {
 			constructionHW = new ArrayQueue(CONSTRUCTION_ZONE);
 			regularHW = new ArrayQueue(HIGHWAY_SIZE - CONSTRUCTION_ZONE);
@@ -36,6 +38,22 @@ public class Highway {
 			
 		}
 		return 0;
+	}
+	
+	public int carsInQueue(ArrayQueue A) {
+		int carCount = 0;
+		for(int i = 0; i < A.size(); i++) {
+			if(A.peekAt(i) instanceof Car) { 
+				carCount++;
+				A.peekAt(i).Increment();
+			}
+		}
+		return carCount;
+	}
+	public void Merge() {
+		if(underConstruction) {
+			this.getConstructionHW().enqueue(this.getRegularHW().dequeue());
+		}
 	}
 	public ArrayQueue getConstructionHW() {
 		return constructionHW;

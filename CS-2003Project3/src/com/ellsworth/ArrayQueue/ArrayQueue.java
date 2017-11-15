@@ -21,12 +21,12 @@ public class ArrayQueue implements QueueInterface{
 		return percent;
 	}
 	
-	public Object peekAt(int intLocation) {
-		return items[intLocation];
+	public Car peekAt(int intLocation) {
+		return (Car) items[intLocation];
 	}
-	
+	//needs work to fully determine what the end of the highway actually is
 	public boolean atEnd(Car O) {
-		if(O.getPosition() == 0) {}
+		if(O.getPosition() == MAX_QUEUE) {}
 		return false;
 	}
 	public int getMAX_QUEUE() {
@@ -38,6 +38,12 @@ public class ArrayQueue implements QueueInterface{
 	public int getFront() {
 		return front;
 	}
+	/*public int itemPlace() {
+		for(Object i:items) {
+			
+		}
+		return 0;
+	}*/
 	@Override
 	public boolean isEmpty() {
 		return count == 0;

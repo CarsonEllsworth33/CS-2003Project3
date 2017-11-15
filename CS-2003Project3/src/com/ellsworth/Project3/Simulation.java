@@ -1,22 +1,15 @@
 package com.ellsworth.Project3;
 
-import java.util.Random;
 
 public class Simulation {
 	private static int minute;
 	private static int seconds;
-	private final static int SIM_SPEED = 50;
 	
 	public static void clock(int minutes, int seconds, Highway HW) {
 		setMinute(minutes);
 		setSeconds(seconds);
 		for(int i = 0; i < 30000;i++) {
-			try {
-				Thread.sleep(SIM_SPEED);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			seconds++;
 			if(HW.getRegularHW().isFull()) {
 				HW.getConstructionHW().enqueue(HW.getRegularHW().dequeue());
@@ -26,13 +19,13 @@ public class Simulation {
 			if(seconds == 60) {
 				minute++;
 				seconds = 0;
-				HW.getRegularHW().enqueue(new Car(0));
+				HW.getRegularHW().enqueue(new Car(0,HW));
 				
 			}	
 			
-			System.out.printf("min: %d sec: %d RHWbackPos: %d CHWbackPos: %d RHWfrontPos: %d CHWfrontPos: %d RHWcount: %d CHWcount: %d%n",minute,seconds,HW.getRegularHW().getBack(),HW.getConstructionHW().getBack(),HW.getRegularHW().getFront(),HW.getConstructionHW().getFront(),HW.getRegularHW().size(),HW.getConstructionHW().size());
-			
-			
+			//System.out.printf("min: %d sec: %d RHWbackPos: %d CHWbackPos: %d RHWfrontPos: %d CHWfrontPos: %d RHWcount: %d CHWcount: %d%n",minute,seconds,HW.getRegularHW().getBack(),HW.getConstructionHW().getBack(),HW.getRegularHW().getFront(),HW.getConstructionHW().getFront(),HW.getRegularHW().size(),HW.getConstructionHW().size());
+			System.out.printf("RHWcar: %d CHWcar: %d%n",HW.carsInQueue(HW.getRegularHW()),HW.carsInQueue(HW.getConstructionHW()));
+			System.out.printf("Car# %d pos: %d");
 		}
 	}
 	
