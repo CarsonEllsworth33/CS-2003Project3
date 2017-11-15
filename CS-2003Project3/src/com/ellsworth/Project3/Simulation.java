@@ -19,7 +19,7 @@ public class Simulation {
 			if(seconds == 60) {
 				minute++;
 				seconds = 0;
-				HW.getRegularHW().enqueue(new Car(0,HW));
+				HW.getRegularHW().enqueue(new Car(0,HW,i));
 				
 			}	
 			

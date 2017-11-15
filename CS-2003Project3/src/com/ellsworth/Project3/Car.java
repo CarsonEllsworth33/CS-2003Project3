@@ -4,6 +4,7 @@ public class Car {
 	private int speed;
 	private double arrivalTime;
 	private double departureTime;
+	private int distanceDriven;
 	//the car will advance 1 tile per second at 75 mph
 	private int ftPerS = 100;
 	// the car will advance 1 tile per 2 seconds at 40 mph
@@ -11,13 +12,16 @@ public class Car {
 	private int position;
 	private Highway whereImDriving;
 	
-	public Car(int position, Highway HW) {
+	public Car(int position, Highway HW, int arrivalTime) {
+		this.arrivalTime = arrivalTime;
 		this.position = position;
 		this.whereImDriving = HW;
+		this.setDistanceDriven(position);
 	}
 	
 	public void Increment() {
-		position++;
+		if(inConstruction()) {}
+		
 	}
 	
 	public void setSpeed(int i) {
@@ -70,6 +74,14 @@ public class Car {
 
 	public int getPosition() {
 		return position;
+	}
+
+	public int getDistanceDriven() {
+		return distanceDriven;
+	}
+
+	public void setDistanceDriven(int distanceDriven) {
+		this.distanceDriven = distanceDriven;
 	}
 	
 }

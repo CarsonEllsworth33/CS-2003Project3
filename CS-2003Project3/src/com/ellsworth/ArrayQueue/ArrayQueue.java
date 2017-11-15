@@ -15,6 +15,7 @@ public class ArrayQueue implements QueueInterface{
 		this.count = 0;
 	}
 	
+	
 	public double percentFull() {
 		double percent;
 		percent = ((double)this.size()/(double)this.MAX_QUEUE)*100;
