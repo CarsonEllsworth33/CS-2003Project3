@@ -29,11 +29,18 @@ public class Highway {
 	
 	public int carsInQueue(ArrayQueue A,double departTime) {
 		int carCount = 0;
-		for(int i = 0; i < A.size(); i++) {
-			if(A.peekAt(i) instanceof Car) { 
-				carCount++;
-				A.peekAt(i).Increment(departTime);
-				//System.out.println(A.toString());
+		for(int i = 1; i < A.size(); i++) {
+			if(A.peekAt(i) instanceof Car) {
+				if() {
+					//System.out.println(i);
+					//System.out.println(A.getBack());
+					if((A.peekAt(i+1).getPosition() - A.peekAt(i).getPosition()) >= 100) {
+						System.out.println((A.peekAt(i).getPosition() - A.peekAt(i+1).getPosition()));
+						carCount++;
+						A.peekAt(i).Increment(departTime);	
+						//A.toString();
+					}
+				}
 			}
 		}
 		return carCount;

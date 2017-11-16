@@ -33,7 +33,7 @@ public class Simulation {
 				
 			}
 			if(!HW.getHighway().isEmpty()) {
-				System.out.printf("car count: %d%n",HW.getHighway().size());
+				//System.out.printf("car count: %d%n",HW.getHighway().size());
 				HW.carsInQueue(HW.getHighway(), seconds/60.0);
 			}
 //			String message = String.format("");
