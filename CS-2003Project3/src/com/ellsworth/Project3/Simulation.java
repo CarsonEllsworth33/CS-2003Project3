@@ -4,10 +4,12 @@ package com.ellsworth.Project3;
 public class Simulation {
 	private static int minute;
 	private static int seconds;
+	private static Car testCar;
 	
 	public static void clock(int minutes, int seconds, Highway HW) {
 		setMinute(minutes);
 		setSeconds(seconds);
+		testCar = new Car(0, HW, 0);
 		for(int i = 0; i < 10;i++) {
 			try {
 				Thread.sleep(750);
@@ -16,14 +18,9 @@ public class Simulation {
 				e.printStackTrace();
 			}
 			seconds++;
-			if(!HW.getRegularHW().isFull()) {
-				HW.getRegularHW().enqueue(new Car(0,HW,i));
-				HW.carsInQueue(HW.getRegularHW());
-				HW.carsInQueue(HW.getConstructionHW());
-			}
-			//System.out.printf("min: %d sec: %d RHWbackPos: %d CHWbackPos: %d RHWfrontPos: %d CHWfrontPos: %d RHWcount: %d CHWcount: %d%n",minute,seconds,HW.getRegularHW().getBack(),HW.getConstructionHW().getBack(),HW.getRegularHW().getFront(),HW.getConstructionHW().getFront(),HW.getRegularHW().size(),HW.getConstructionHW().size());
-			//System.out.printf("RHWcar: %d CHWcar: %d%n",HW.carsInQueue(HW.getRegularHW()),HW.carsInQueue(HW.getConstructionHW()));
-			System.out.printf("%s",HW.toString());
+			
+			testCar.Increment();
+			System.out.println(testCar.toString());
 		}
 	}
 	

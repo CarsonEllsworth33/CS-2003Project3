@@ -5,7 +5,7 @@ public class Highway {
 	private  ArrayQueue regularHW;// part of highway not under construction
 	//1040 represents the number of cars(at which each car would occupy 100ft)
 	//that would fit in a 20 mile Highway
-	private final int HIGHWAY_SIZE = 1040;
+	private final int HIGHWAY_SIZE = 1050;
 	//260 represents the number of cars(at which each car would occupy 100ft)
 	//that would fit in a 5 mile Highway 
 	private final int CONSTRUCTION_ZONE = 260;
@@ -16,12 +16,12 @@ public class Highway {
 	public Highway(boolean underConstruct) {
 		this.underConstruction = underConstruct;
 		if(underConstruction == true) {
-			constructionHW = new ArrayQueue(CONSTRUCTION_ZONE);
-			regularHW = new ArrayQueue(HIGHWAY_SIZE - CONSTRUCTION_ZONE);	
+			constructionHW = new ArrayQueue(CONSTRUCTION_ZONE,"Construction: ");
+			regularHW = new ArrayQueue(HIGHWAY_SIZE - CONSTRUCTION_ZONE,"Regular: ");	
 		}
 		else {
-			constructionHW = new ArrayQueue(0);
-			regularHW = new ArrayQueue(HIGHWAY_SIZE);
+			constructionHW = new ArrayQueue(0,"Construction: ");
+			regularHW = new ArrayQueue(HIGHWAY_SIZE,"Regular: ");
 		}	
 	}
 	

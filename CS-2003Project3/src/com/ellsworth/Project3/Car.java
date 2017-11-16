@@ -1,18 +1,24 @@
 package com.ellsworth.Project3;
 
 public class Car {
-	private int speed;
+	private double speed;
 	private double arrivalTime;
 	private double departureTime;
 	private int distanceDriven;
 	//the car will advance 1 tile per second at 75 mph
-	private int ftPerS = 100;
+	private int ftPerS = 110;
 	// the car will advance 1 tile per 2 seconds at 40 mph
-	private int conFtPerS = 50; 
-	private int position;
+	private int conFtPerS = 59; 
+	private double position;
 	private boolean inConstruction = false;
 	private Highway whereImDriving;
 	
+	/**
+	 * 
+	 * @param position
+	 * @param HW - this determines which of the two highways the car is on
+	 * @param arrivalTime
+	 */
 	public Car(int position, Highway HW, int arrivalTime) {
 		this.arrivalTime = arrivalTime;
 		this.position = position;
@@ -21,14 +27,19 @@ public class Car {
 	}
 	
 	public void Increment() {
-		this.mergeCheck();
-		if(this.inConstruction) {
-			this.position = this.position + conFtPerS;
+		this.position = this.getPosition() + this.CarSpeed();
+	}
+	
+	public double CarSpeed() {
+		if(this.inConstructHW()) {
+			if(this.getPosition() > whereImDriving.getConstructionHW().getMAX_QUEUE()-260) {
+				this.setSpeed(conFtPerS);
+			}
+			else {
+				this.setSpeed(ftPerS);
+			}		
 		}
-		else {
-			this.position = this.position + ftPerS;
-		}
-		
+		return speed;
 	}
 	
 	public String toString() {
@@ -36,27 +47,33 @@ public class Car {
 		return s;
 	}
 	
-	/**
-	 * function used to transfer over the car to the construction queue
-	 */
-	public void mergeCheck() {
-		if(this.inConstructHW()) {
-			if(this.getPosition()>=780 && this.inConstruction == false) {//ready to be in the construction zone
-				whereImDriving.getConstructionHW().enqueue(this);
-				whereImDriving.getRegularHW().dequeue();
-				this.inConstruction = true;
-			}
-		}	
-	}
-	
-
 	public boolean inConstructHW() {
 		return whereImDriving.getUnderConstruction();
 	}
 	
-	public void setSpeed(int i) {
+	public double speedMod(double d) {
+		if(d<=49.9) {
+			return 1.0;
+		}
+		else if(d >= 50.0 && d <=74.9) {
+			return .75;
+		}
+		else if(d >= 75.0 && d<=89.9) {
+			return .50;
+		}
+		else {
+			return .25;
+		}
+	}
+	
+	public void setSpeed(double i) {
 		// TODO Auto-generated method stub
-		this.speed = i;
+		double speedMod = this.speedMod(whereImDriving.getConstructionHW().percentFull()); 
+		this.speed = i * speedMod;	
+	}
+	
+	public double getSpeed() {
+		return speed;
 	}
 
 	public double getArrivalTime() {
@@ -79,7 +96,7 @@ public class Car {
 	}
 
 
-	public int getPosition() {
+	public double getPosition() {
 		return position;
 	}
 

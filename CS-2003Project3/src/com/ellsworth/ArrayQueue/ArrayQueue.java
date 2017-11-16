@@ -6,13 +6,15 @@ public class ArrayQueue implements QueueInterface{
 	private final int MAX_QUEUE;
 	private Object[] items;
 	private int front,back,count;
+	private String ID;
 	
-	public ArrayQueue(int size) {
+	public ArrayQueue(int size,String ID) {
 		MAX_QUEUE = size;
 		items = new Object[MAX_QUEUE];
 		this.front = 0;
 		this.back = MAX_QUEUE -1;
 		this.count = 0;
+		this.ID = ID;
 	}
 	
 	
@@ -94,7 +96,7 @@ public class ArrayQueue implements QueueInterface{
 		return front;
 	}
 	public String toString() {
-		String s = "";
+		String s = this.ID;
 		for(int i = 0; i < this.size();i++) {
 			s += String.format("|%s|", this.peekAt(i).toString());
 		}
