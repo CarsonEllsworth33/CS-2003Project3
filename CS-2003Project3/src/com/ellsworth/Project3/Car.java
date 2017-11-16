@@ -12,53 +12,102 @@ public class Car {
 	private double position;
 	private boolean inConstruction = false;
 	private Highway whereImDriving;
-	
+	private final double HALF_FULL = 50.0;
+	private final double THREEFOURTHS_FULL = 75.0;
+	private final double NINETENTHS_FULL = 90.0;
 	/**
 	 * 
 	 * @param position
 	 * @param HW - this determines which of the two highways the car is on
 	 * @param arrivalTime
 	 */
-	public Car(int position, Highway HW, int arrivalTime) {
+	public Car(int position, Highway HW, double arrivalTime) {
 		this.arrivalTime = arrivalTime;
 		this.position = position;
 		this.whereImDriving = HW;
 		this.setDistanceDriven(position);
 	}
 	
-	public void Increment() {
-		this.position = this.getPosition() + this.CarSpeed();
+	public void Increment(double departTime) {
+		if(!whereImDriving.getHighway().isEmpty()) {
+			this.enteringConstruction();
+			this.position = this.getPosition() + this.CarSpeed();
+			this.exitHW(departTime);
+		}
 	}
 	
 	public double CarSpeed() {
 		if(this.inConstructHW()) {
-			if(this.getPosition() > whereImDriving.getConstructionHW().getMAX_QUEUE()-260) {
+			if(this.getPosition() > whereImDriving.getHIGHWAY_LENGTH()-whereImDriving.getCONSTRUCTION_LENGTH()) {
 				this.setSpeed(conFtPerS);
 			}
 			else {
 				this.setSpeed(ftPerS);
 			}		
 		}
-		return speed;
+		else {
+			this.setSpeed(ftPerS);
+		}
+		return this.getSpeed();
 	}
 	
+	public void enteringConstruction() {
+		if(this.inConstruction == false) {
+			if(this.inConstructHW()) {
+				if(this.getPosition() > whereImDriving.getHIGHWAY_LENGTH()-whereImDriving.getCONSTRUCTION_LENGTH()) {
+					this.position = whereImDriving.getHIGHWAY_LENGTH()-whereImDriving.getCONSTRUCTION_LENGTH();
+					System.out.println("Entering Construction");
+					this.inConstruction = true;
+				}
+			}
+		}	
+	}
+	
+	/**
+	 * handles the method calls to determine if the car needs to leave the Highway
+	 */
+	public void exitHW(double departure) {
+		if(this.needToExitHW()) {
+			this.setDepartureTime(departure);
+			System.out.println("DepartureTime: "+this.getDepartureTime());
+			System.out.println("Exiting Highway\n");
+			whereImDriving.getHighway().dequeue();
+		}
+		else System.out.println("Keep Driving\n");
+	}
+	
+	private boolean needToExitHW() {
+		if(this.getPosition() > whereImDriving.getHIGHWAY_LENGTH()) {
+			//then needs to exit highway and must be at the front of the HW
+			return true;
+		}
+		else return false;
+	}
+	
+	/**
+	 * @return String that shows the car position, arrival time and if it is in construction
+	 */
 	public String toString() {
-		String s = " Pos: "+this.getPosition()+" AT: "+this.getArrivalTime() + " C_Zone; " + this.inConstruction;
+		String s = String.format("Pos: %.2f AT: %.2f CS: %.2f C_Zone: %s", this.getPosition(),this.getArrivalTime(),this.getSpeed(), this.inConstruction);
 		return s;
 	}
 	
 	public boolean inConstructHW() {
 		return whereImDriving.getUnderConstruction();
 	}
-	
+	/**
+	 * this function modifies the speed of the car by the fullness of the highway
+	 * @param double fullness of Highway
+	 * @return double speed modifier
+	 */
 	public double speedMod(double d) {
-		if(d<=49.9) {
+		if(d<50.0) {
 			return 1.0;
 		}
-		else if(d >= 50.0 && d <=74.9) {
+		else if(d >= this.HALF_FULL && d < this.THREEFOURTHS_FULL) {
 			return .75;
 		}
-		else if(d >= 75.0 && d<=89.9) {
+		else if(d >= this.THREEFOURTHS_FULL && d < this.NINETENTHS_FULL) {
 			return .50;
 		}
 		else {
@@ -66,13 +115,13 @@ public class Car {
 		}
 	}
 	
-	public void setSpeed(double i) {
+	private void setSpeed(double i) {
 		// TODO Auto-generated method stub
-		double speedMod = this.speedMod(whereImDriving.getConstructionHW().percentFull()); 
+		double speedMod = this.speedMod(whereImDriving.getHighway().percentFull()); 
 		this.speed = i * speedMod;	
 	}
 	
-	public double getSpeed() {
+	private double getSpeed() {
 		return speed;
 	}
 
@@ -107,5 +156,5 @@ public class Car {
 	public void setDistanceDriven(int distanceDriven) {
 		this.distanceDriven = distanceDriven;
 	}
-	
+		
 }

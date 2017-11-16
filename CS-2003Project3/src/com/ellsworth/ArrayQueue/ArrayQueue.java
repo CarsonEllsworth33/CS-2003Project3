@@ -20,7 +20,7 @@ public class ArrayQueue implements QueueInterface{
 	
 	public double percentFull() {
 		double percent;
-		percent = ((double)this.size()/(double)this.MAX_QUEUE)*100;
+		percent = (((double)this.size()/(double)this.MAX_QUEUE)*100);
 		return percent;
 	}
 	
@@ -81,11 +81,7 @@ public class ArrayQueue implements QueueInterface{
 		}
 		else {throw new QueueException("QueueException: Queue is empty on peek");}
 	}
-
-	public boolean atEnd(Car O) {
-		if(O.getPosition() == MAX_QUEUE) {}
-		return false;
-	}
+	
 	public int getMAX_QUEUE() {
 		return MAX_QUEUE;
 	}
@@ -98,7 +94,7 @@ public class ArrayQueue implements QueueInterface{
 	public String toString() {
 		String s = this.ID;
 		for(int i = 0; i < this.size();i++) {
-			s += String.format("|%s|", this.peekAt(i).toString());
+			s += String.format("|%s CC: %d PF: %.2f|", this.peekAt(i).toString(),this.size(),this.percentFull());
 		}
 		return s +="\n";
 	}
