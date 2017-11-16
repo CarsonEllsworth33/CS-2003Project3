@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Simulation {
-	private static double minute;
-	private static double seconds;
+	private double minute;
+	private double seconds;
+	private int CarID = 1;
+	private final int CARS_PER_MIN = 5;
 	
-	
-	public static void clock(int minutes, int seconds, Highway HW) {
+	public void clock(int minutes, int seconds, Highway HW) {
 //		File file = new File("AverageTimeToLeave"+HW.getHIGHWAY_ID()+"HW.txt");
 //		try {
 //			if(!file.exists()) {
@@ -22,17 +23,18 @@ public class Simulation {
 //			PrintWriter pw = new PrintWriter(file);
 		setMinute(minutes);
 		setSeconds(seconds);
-		HW.getHighway().enqueue(new Car(0,HW,secondsToMinutes(seconds)));
+		HW.getHighway().enqueue(new Car(CarID,0,HW,seconds/60.0));
 		
 		for(int i = 0; i <200000 ;i++) {
 			seconds++;
-			if(seconds%900 == 0 && !HW.getHighway().isFull()) {
-				HW.getHighway().enqueue(new Car(0,HW,seconds));
+			if(seconds%(60/CARS_PER_MIN) == 0 && !HW.getHighway().isFull()) {
+				CarID++;
+				HW.getHighway().enqueue(new Car(CarID,0,HW,seconds/60.0));
 				
 			}
 			if(!HW.getHighway().isEmpty()) {
 				System.out.printf("car count: %d%n",HW.getHighway().size());
-				HW.carsInQueue(HW.getHighway(), secondsToMinutes(seconds));
+				HW.carsInQueue(HW.getHighway(), seconds/60.0);
 			}
 //			String message = String.format("");
 //		   	pw.println(message);
@@ -52,24 +54,26 @@ public class Simulation {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Highway Construction = new Highway(true);
-		clock(0,0,Construction);
-		//Highway newHighway = new Highway(false);
-		//clock(0,0,newHighway);
+		Highway Regular = new Highway(false);
+		Simulation simulation = new Simulation();
+		
+		simulation.clock(0, 0, Construction);
+		//simulation.clock(0, 0, Regular);
 	}
-	public static double secondsToMinutes(double seconds) {
-		minute = seconds/60.0;
-		return getMinute();
+	public double secondsToMinutes() {
+		return seconds/60;
 	}
-	public static double getMinute() {
+	
+	public double getMinute() {
 		return minute;
 	}
-	private static void setMinute(int timeInMinutes) {
+	private void setMinute(int timeInMinutes) {
 		minute = timeInMinutes;
 	}
 	public double getSeconds() {
 		return seconds;
 	}
-	private static void setSeconds(int timeInSeconds) {
+	private void setSeconds(int timeInSeconds) {
 		seconds = timeInSeconds;
 	}
 	

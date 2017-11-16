@@ -15,13 +15,15 @@ public class Car {
 	private final double HALF_FULL = 50.0;
 	private final double THREEFOURTHS_FULL = 75.0;
 	private final double NINETENTHS_FULL = 90.0;
+	private final int ID;
 	/**
 	 * 
 	 * @param position
 	 * @param HW - this determines which of the two highways the car is on
 	 * @param arrivalTime
 	 */
-	public Car(int position, Highway HW, double arrivalTime) {
+	public Car(int ID,int position, Highway HW, double arrivalTime) {
+		this.ID = ID;
 		this.arrivalTime = arrivalTime;
 		this.position = position;
 		this.whereImDriving = HW;
@@ -56,7 +58,7 @@ public class Car {
 			if(this.inConstructHW()) {
 				if(this.getPosition() > whereImDriving.getHIGHWAY_LENGTH()-whereImDriving.getCONSTRUCTION_LENGTH()) {
 					this.position = whereImDriving.getHIGHWAY_LENGTH()-whereImDriving.getCONSTRUCTION_LENGTH();
-					System.out.println("Entering Construction");
+					//System.out.println("Entering Construction");
 					this.inConstruction = true;
 				}
 			}
@@ -68,12 +70,12 @@ public class Car {
 	 */
 	public void exitHW(double departure) {
 		if(this.needToExitHW()) {
-			this.setDepartureTime(departure);
+			this.departureTime = departure;
 			System.out.println("DepartureTime: "+this.getDepartureTime());
-			System.out.println("Exiting Highway\n");
+			//System.out.println("Exiting Highway\n");
 			whereImDriving.getHighway().dequeue();
 		}
-		else System.out.println("Keep Driving\n");
+		//else System.out.println("Keep Driving\n");
 	}
 	
 	private boolean needToExitHW() {
@@ -88,7 +90,7 @@ public class Car {
 	 * @return String that shows the car position, arrival time and if it is in construction
 	 */
 	public String toString() {
-		String s = String.format("Pos: %.2f AT: %.2f CS: %.2f C_Zone: %s", this.getPosition(),this.getArrivalTime(),this.getSpeed(), this.inConstruction);
+		String s = String.format("ID: %d Pos: %.2f AT: %.2f CS: %.2f C_Zone: %s",this.ID, this.getPosition(),this.getArrivalTime(),this.getSpeed(), this.inConstruction);
 		return s;
 	}
 	

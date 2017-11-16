@@ -33,7 +33,7 @@ public class Highway {
 			if(A.peekAt(i) instanceof Car) { 
 				carCount++;
 				A.peekAt(i).Increment(departTime);
-				System.out.println(A.toString());
+				//System.out.println(A.toString());
 			}
 		}
 		return carCount;
