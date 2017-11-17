@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Simulation {
 	private int CarID = 1;
-	private final double CARS_PER_MIN = 15;
+	private final double CARS_PER_MIN = .07;
 	private List<Car> averageTlist = new LinkedList<Car>();
 	private final int CARS_TO_ENTER = 2000;
 	private int carCounter = 1;// at t = 0 one car is on the Highway
@@ -47,7 +47,7 @@ public class Simulation {
 				}
 			}
 			PrintWriter pw = new PrintWriter(file);
-			String message = String.format("CZ size, %d, CPM, %d, CEnter, %d",HW.getCONSTRUCTION_LENGTH(),this.CARS_PER_MIN,this.CARS_TO_ENTER);
+			String message = String.format("CZ size, %d, CPM, %.2f, CEnter, %d",HW.getCONSTRUCTION_LENGTH(),this.CARS_PER_MIN,this.CARS_TO_ENTER);
 			pw.println(message);
 			for (Car i : averageTlist) {
 				message = String.format("Car ID, %d, Car TripT, %.2f, Car DT, %.2f, Car AT, %.2f", i.getID(),
