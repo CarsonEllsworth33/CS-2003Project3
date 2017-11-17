@@ -60,7 +60,6 @@ public class Highway {
 				} else if (this.safeHighwayDriving(A, i)) {
 					A.peekAt(i).Increment(departTime, L);
 				}
-
 			}
 		}
 	}
