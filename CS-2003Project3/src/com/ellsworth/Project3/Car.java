@@ -7,9 +7,9 @@ public class Car {
 	private double departureTime;
 	private double averageTime;
 	// the car will advance 1 tile per second at 75 mph
-	private int ftPerS = 110;
+	private double ftPerS = 110;
 	// the car will advance 1 tile per 2 seconds at 40 mph
-	private int conFtPerS = 59;
+	private double conFtPerS = 59/4;
 	private double position;
 	private boolean inConstruction = false;
 	private Highway whereImDriving;
@@ -51,7 +51,15 @@ public class Car {
 	public double getArrivalTime() {
 		return arrivalTime;
 	}
-
+	
+	/**
+	 * returns the Construction speed limit in terms of ft per second
+	 * @return double conFtPerS
+	 */
+	public double getConFtPS() {
+		return this.conFtPerS;
+	}
+	
 	/**
 	 * returns the average time in minutes of the Car Object as a double
 	 * 
@@ -173,4 +181,5 @@ public class Car {
 	private void setAverageTime(double averageTime) {
 		this.averageTime = averageTime;
 	}
+	
 }

@@ -9,9 +9,9 @@ import java.util.List;
 
 public class Simulation {
 	private int CarID = 1;
-	private final double CARS_PER_MIN = .07;
+	private final double CARS_PER_MIN = 4;
 	private List<Car> averageTlist = new LinkedList<Car>();
-	private final int CARS_TO_ENTER = 2000;
+	private final int CARS_TO_ENTER = 1000;
 	private int carCounter = 1;// at t = 0 one car is on the Highway
 
 	/**
@@ -25,6 +25,7 @@ public class Simulation {
 	 *            the desired HW to run
 	 */
 	public void clock(int minutes, int seconds, Highway HW) {
+		Car infoCar = new Car(CarID,0,HW,0);
 		HW.getHighway().enqueue(new Car(CarID, 0, HW, seconds / 60.0));
 		System.out.println("runningSim");
 		while (carCounter <= CARS_TO_ENTER) {
@@ -36,7 +37,7 @@ public class Simulation {
 			}
 				HW.carsInQueue(HW.getHighway(), seconds / 60.0, averageTlist);
 		}
-		File file = new File("AverageTimeToLeave" + HW.getHIGHWAY_ID() + "CZone" + HW.getCONSTRUCTION_LENGTH() + "CPM"
+		File file = new File("ATL" + HW.getHIGHWAY_ID() +"CZone S"+infoCar.getConFtPS()+ "CZone" + HW.getCONSTRUCTION_LENGTH() + "CPM"
 				+ this.CARS_PER_MIN +"CEnter"+this.CARS_TO_ENTER+ "HW.txt");
 		try {
 			if (!file.exists()) {
@@ -47,7 +48,12 @@ public class Simulation {
 				}
 			}
 			PrintWriter pw = new PrintWriter(file);
-			String message = String.format("CZ size, %d, CPM, %.2f, CEnter, %d",HW.getCONSTRUCTION_LENGTH(),this.CARS_PER_MIN,this.CARS_TO_ENTER);
+			double average = 0;
+			for (Car i : averageTlist) {
+				average = average + i.getAverageTime();
+			}
+			average = average/ averageTlist.size();
+			String message = String.format("CZ size, %d, CPM, %.2f, CEnter, %d, Avg.T, %.2f",HW.getCONSTRUCTION_LENGTH(),this.CARS_PER_MIN,this.CARS_TO_ENTER,average);
 			pw.println(message);
 			for (Car i : averageTlist) {
 				message = String.format("Car ID, %d, Car TripT, %.2f, Car DT, %.2f, Car AT, %.2f", i.getID(),
