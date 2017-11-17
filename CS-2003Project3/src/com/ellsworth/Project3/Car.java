@@ -3,7 +3,6 @@ package com.ellsworth.Project3;
 import java.util.List;
 
 public class Car {
-	private double speed;
 	private double arrivalTime;
 	private double departureTime;
 	private double averageTime;
@@ -38,8 +37,8 @@ public class Car {
 	 *         construction
 	 */
 	public String toString() {
-		String s = String.format("ID: %d Pos: %.2f AT: %.2f CS: %.2f C_Zone: %s", this.ID, this.getPosition(),
-				this.getArrivalTime(), this.getSpeed(), this.inConstruction);
+		String s = String.format("PF: %.2f ID: %d Pos: %.2f AT: %.2f CS: %.2f C_Zone: %s",whereImDriving.getHighway().percentFull(), this.ID, this.getPosition(),
+				this.getArrivalTime(), this.setSpeed(conFtPerS), this.inConstruction);
 		return s;
 	}
 
@@ -108,16 +107,17 @@ public class Car {
 	}
 
 	private double CarSpeed() {
+		double speedVal;
 		if (this.inConstructHW()) {
 			if (this.getPosition() > whereImDriving.getHIGHWAY_LENGTH() - whereImDriving.getCONSTRUCTION_LENGTH()) {
-				this.setSpeed(conFtPerS);
+				speedVal = this.setSpeed(conFtPerS);
 			} else {
-				this.setSpeed(ftPerS);
+				speedVal = this.setSpeed(ftPerS);
 			}
 		} else {
-			this.setSpeed(ftPerS);
+			speedVal = this.setSpeed(ftPerS);
 		}
-		return this.getSpeed();
+		return speedVal;
 	}
 
 	private void enteringConstruction() {
@@ -125,7 +125,6 @@ public class Car {
 			if (this.inConstructHW()) {
 				if (this.getPosition() > whereImDriving.getHIGHWAY_LENGTH() - whereImDriving.getCONSTRUCTION_LENGTH()) {
 					this.position = whereImDriving.getHIGHWAY_LENGTH() - whereImDriving.getCONSTRUCTION_LENGTH();
-					// System.out.println("Entering Construction");
 					this.inConstruction = true;
 				}
 			}
@@ -165,14 +164,10 @@ public class Car {
 		}
 	}
 
-	private void setSpeed(double i) {
+	private double setSpeed(double i) {
 		// TODO Auto-generated method stub
 		double speedMod = this.speedMod(whereImDriving.getHighway().percentFull());
-		this.speed = i * speedMod;
-	}
-
-	private double getSpeed() {
-		return speed;
+		return ((i * speedMod));
 	}
 
 	private void setAverageTime(double averageTime) {

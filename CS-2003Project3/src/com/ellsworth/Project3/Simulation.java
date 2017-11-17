@@ -8,11 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Simulation {
-	private double seconds;
 	private int CarID = 1;
-	private final double CARS_PER_MIN = .07;
+	private final double CARS_PER_MIN = 15;
 	private List<Car> averageTlist = new LinkedList<Car>();
-	private final int CARS_TO_ENTER = 600;
+	private final int CARS_TO_ENTER = 2000;
 	private int carCounter = 1;// at t = 0 one car is on the Highway
 
 	/**
@@ -26,7 +25,6 @@ public class Simulation {
 	 *            the desired HW to run
 	 */
 	public void clock(int minutes, int seconds, Highway HW) {
-		setSeconds(seconds);
 		HW.getHighway().enqueue(new Car(CarID, 0, HW, seconds / 60.0));
 		System.out.println("runningSim");
 		while (carCounter <= CARS_TO_ENTER) {
@@ -36,10 +34,7 @@ public class Simulation {
 				carCounter++;
 				HW.getHighway().enqueue(new Car(CarID, 0, HW, seconds / 60.0));
 			}
-			if (!HW.getHighway().isEmpty()) {
 				HW.carsInQueue(HW.getHighway(), seconds / 60.0, averageTlist);
-
-			}
 		}
 		File file = new File("AverageTimeToLeave" + HW.getHIGHWAY_ID() + "CZone" + HW.getCONSTRUCTION_LENGTH() + "CPM"
 				+ this.CARS_PER_MIN +"CEnter"+this.CARS_TO_ENTER+ "HW.txt");
@@ -52,8 +47,10 @@ public class Simulation {
 				}
 			}
 			PrintWriter pw = new PrintWriter(file);
+			String message = String.format("CZ size, %d, CPM, %d, CEnter, %d",HW.getCONSTRUCTION_LENGTH(),this.CARS_PER_MIN,this.CARS_TO_ENTER);
+			pw.println(message);
 			for (Car i : averageTlist) {
-				String message = String.format("Car ID, %d, Car TripT, %.2f, Car DT, %.2f, Car AT, %.2f", i.getID(),
+				message = String.format("Car ID, %d, Car TripT, %.2f, Car DT, %.2f, Car AT, %.2f", i.getID(),
 						i.getAverageTime(), i.getDepartureTime(), i.getArrivalTime());
 				pw.println(message);
 			}
@@ -76,12 +73,14 @@ public class Simulation {
 		Highway Construction = new Highway(true);
 		Highway Regular = new Highway(false);
 		Simulation simulation = new Simulation();
+		
+		if(!(simulation.CARS_PER_MIN > 60)) {
 		simulation.clock(0, 0, Construction);
 		simulation.clock(0, 0, Regular);
-	}
-
-	private void setSeconds(int timeInSeconds) {
-		seconds = timeInSeconds;
+		}
+		else {
+			System.out.println("use values <= 60 for CARS_PER_MIN");
+		}
 	}
 
 }

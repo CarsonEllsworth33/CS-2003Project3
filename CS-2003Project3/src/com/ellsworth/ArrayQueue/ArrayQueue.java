@@ -54,8 +54,8 @@ public class ArrayQueue implements QueueInterface {
 			return true;
 		} else
 			return false;
-	}
-
+	}	
+	
 	/**
 	 * returns an int of the max items allowed in the queue
 	 * 

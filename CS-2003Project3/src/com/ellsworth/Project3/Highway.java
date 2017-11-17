@@ -47,10 +47,13 @@ public class Highway {
 	 *            car managing list to hold car information records
 	 */
 	public void carsInQueue(ArrayQueue A, double departTime, List<Car> L) {
+		if(A.isFull()) {
+			A.peekAt(A.getFront()).Increment(departTime, L);
+		}
 		for (int i = A.getBack(); i >= A.getFront(); i--) {
 			if (A.peekAt(i) instanceof Car) {
-				if (A.getBack() == A.getFront()) {
-					A.peekAt(i).Increment(departTime, L);
+				if ((A.getBack()+1) == A.getFront()) {
+					A.peekAt(A.getFront()).Increment(departTime, L);
 				}
 				if (A.inFront(A.peekAt(i))) {
 					A.peekAt(i).Increment(departTime, L);
@@ -67,7 +70,7 @@ public class Highway {
 	 * 
 	 * @return ArrayQueue Highway
 	 */
-	protected ArrayQueue getHighway() {
+	public ArrayQueue getHighway() {
 		if (this.getUnderConstruction()) {
 			return constructionHW;
 		} else {
